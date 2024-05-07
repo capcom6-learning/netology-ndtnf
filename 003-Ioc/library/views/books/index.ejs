@@ -1,0 +1,39 @@
+<%- include("../partials/top.ejs", {title: "Electronic Library" }); %>
+    <%- include("../partials/navbar.ejs"); %>
+
+        <div class="container mt-4">
+            <div class="row">
+                <% books.forEach(function(book) { %>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <% if (book.fileCover) { %>
+                                <img src="<%= book.fileCover %>" class="card-img-top" alt="<%= book.title %>"
+                                    width="150">
+                                <% } else { %>
+                                    <img src="https://via.placeholder.com/150" class="card-img-top"
+                                        alt="<%= book.title %>">
+                                    <% } %>
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= book.title %>
+                                            </h5>
+                                            <p class="card-text">
+                                                <%= book.description %>
+                                            </p>
+                                            <p class="card-text">Author: <%= book.authors %>
+                                            </p>
+                                            <p class="card-text">Favorite: <%= book.favorite ? 'Yes' : 'No' %>
+                                            </p>
+                                            <p class="card-text">Views: <%= book.views %>
+                                            </p>
+                                            <a href="/<%= book.id %>" class="btn btn-primary">Details</a>
+                                            <a href="/<%= book.id %>/edit" class="btn btn-warning">Edit</a>
+                                            <a href="/<%= book.id %>/delete" class="btn btn-danger">Delete</a>
+                                        </div>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+        </div>
+
+        <%- include("../partials/bottom.ejs"); %>
