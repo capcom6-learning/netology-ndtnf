@@ -1,3 +1,5 @@
+require("reflect-metadata");
+const inversify = require("inversify");
 const { Schema, model, isValidObjectId } = require("mongoose");
 
 const BookSchema = new Schema({
@@ -107,12 +109,20 @@ const validate = (book) => {
     return book;
 }
 
+class BooksRepository {
+    constructor() {
+        this.select = select;
+        this.get = get;
+        this.insert = insert;
+        this.update = update;
+        this.remove = remove;
+    }
+}
+
+inversify.decorate(inversify.injectable(), BooksRepository);
+
 module.exports = {
-    select,
-    get,
-    insert,
-    update,
-    remove,
+    BooksRepository,
     NotFoundError,
     ValidationError,
 };

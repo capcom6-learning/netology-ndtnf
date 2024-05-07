@@ -1,4 +1,7 @@
-const books = require("../repositories/books");
+const { BooksRepository } = require("../repositories/books");
+
+const container = require("../container");
+const books = container.get(BooksRepository);
 
 const counter = require("./counter");
 
