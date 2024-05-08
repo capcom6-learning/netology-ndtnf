@@ -1,0 +1,15 @@
+<%- include("../partials/top.ejs", {title: "Confirm delete" }); %>
+    <%- include("../partials/navbar.ejs"); %>
+
+        <div class="centered-container">
+            <div class="confirmation-dialog">
+                <h2>Are you sure you want to delete this book?</h2>
+                <p>This action cannot be undone.</p>
+                <form action="/<%= book.id %>/delete" method="POST">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <a href="/" class="btn btn-secondary mt-2">Cancel</a>
+            </div>
+        </div>
+
+        <%- include("../partials/bottom.ejs"); %>

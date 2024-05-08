@@ -1,0 +1,71 @@
+@baseUrl=http://localhost:3000/api
+
+###
+POST {{baseUrl}}/user/login HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+GET {{baseUrl}}/books HTTP/1.1
+
+###
+GET {{baseUrl}}/books/65fb0feed55fde2b629c7cde HTTP/1.1
+
+###
+POST {{baseUrl}}/books HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Title {{$randomInt 1 999}}",
+    "description": "Description {{$guid}}",
+    "authors": "Author {{$randomInt 100 999}}"
+}
+
+###
+PUT {{baseUrl}}/books/65fb0feed55fde2b629c7cde HTTP/1.1
+Content-Type: application/json
+
+{
+    "description": "Description {{$guid}}"
+}
+
+###
+DELETE {{baseUrl}}/books/65fb0feed55fde2b629c7cde HTTP/1.1
+
+###
+POST {{baseUrl}}/books HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="title"
+
+Сказка о золотом петушке
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="description"
+
+Не́где, в тридевятом царстве,
+В тридесятом государстве,
+Жил-был славный царь Дадон.
+Смолоду был грозен он
+И соседям то и дело
+Наносил обиды смело;
+Но под старость захотел
+Отдохнуть от ратных дел
+И покой себе устроить,
+Тут соседи беспокоить
+Стали старого царя,
+Страшный вред ему творя…
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="authors"
+
+Александр Пушкин
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="fileBook"; filename="Pushkin_A._Skazka_O_Zolotom_Petushke.a4.pdf"
+Content-Type: application/pdf
+
+< ./assets/Pushkin_A._Skazka_O_Zolotom_Petushke.a4.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+GET {{baseUrl}}/books/65fb118c5d8247d3d077dd21/download HTTP/1.1
