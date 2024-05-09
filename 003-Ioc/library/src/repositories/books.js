@@ -1,4 +1,3 @@
-require("reflect-metadata");
 const inversify = require("inversify");
 const { Schema, model, isValidObjectId } = require("mongoose");
 

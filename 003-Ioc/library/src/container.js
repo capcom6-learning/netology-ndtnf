@@ -1,4 +1,3 @@
-require("reflect-metadata");
 const { Container } = require("inversify");
 const { BooksRepository } = require("./repositories/books");
 

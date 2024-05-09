@@ -1,3 +1,5 @@
+require("reflect-metadata");
+
 const config = require("./config");
 const express = require("express");
 const { createServer } = require("http");
