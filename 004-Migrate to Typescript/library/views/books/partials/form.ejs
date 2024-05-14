@@ -1,0 +1,31 @@
+<div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" id="title" name="title" value="<%= book.title %>" required>
+</div>
+<div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea class="form-control" id="description" name="description" rows="3"
+        required><%= book.description %></textarea>
+</div>
+<div class="mb-3">
+    <label for="authors" class="form-label">Authors</label>
+    <input type="text" class="form-control" id="authors" name="authors" value="<%= book.authors %>" required>
+</div>
+<div class="mb-3">
+    <label for="favorite" class="form-label">Favorite</label>
+    <input type="checkbox" class="form-check-input" id="favorite" name="favorite" <%=book.favorite ? 'checked' : '' %>>
+</div>
+<!-- <div class="mb-3">
+    <label for="fileCover" class="form-label">Book Cover</label>
+    <input type="file" class="form-control" id="fileCover" name="fileCover">
+    <% if (book.fileCover) { %>
+        <img src="<%= book.fileCover %>" alt="Current Cover" height="150">
+        <% } %>
+</div> -->
+<div class="mb-3">
+    <label for="fileBook" class="form-label">Book File</label>
+    <input type="file" class="form-control" id="fileBook" name="fileBook" accept="application/pdf">
+    <% if (book.fileBook) { %>
+        <a href="/api/books/<%= book.id %>/download" class="d-block mt-2">Current Book File</a>
+        <% } %>
+</div>

@@ -1,0 +1,7 @@
+@baseUrl=http://localhost:3001/api
+
+###
+GET {{baseUrl}}/counter/{{$randomInt 1 10}} HTTP/1.1
+
+###
+POST {{baseUrl}}/counter/{{$randomInt 1 10}}/incr HTTP/1.1
