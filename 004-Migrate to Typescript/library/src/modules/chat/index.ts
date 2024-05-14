@@ -1,14 +1,16 @@
-const { RES_CHAT_HISTORY, REQ_SEND_MESSAGE, RES_NEW_MESSAGE } = require("./events");
-const { selectByBookId, insert } = require("./repository");
+import { Server, Socket } from "socket.io";
 
-const registerSocketIO = async (io, socket) => {
+import { RES_CHAT_HISTORY, REQ_SEND_MESSAGE, RES_NEW_MESSAGE } from "./events";
+import { selectByBookId, insert } from "./repository";
+
+export const registerSocketIO = async (io: Server, socket: Socket) => {
     console.log(`Socket ${socket.id} connected`);
     socket.on("disconnect", () => {
         console.log(`Socket ${socket.id} disconnected`);
     });
 
     const bookId = socket.handshake.query.bookId;
-    if (!bookId) {
+    if (!bookId || typeof bookId !== "string") {
         return;
     }
     socket.join(bookId);
@@ -21,8 +23,4 @@ const registerSocketIO = async (io, socket) => {
     });
 
     socket.emit(RES_CHAT_HISTORY, await selectByBookId(bookId));
-};
-
-module.exports = {
-    registerSocketIO
 };

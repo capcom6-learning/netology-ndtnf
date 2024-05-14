@@ -1,4 +1,6 @@
-const router = require("express").Router();
+import { Router } from "express";
+
+export const router = Router();
 
 router.get("/404", (req, res) => {
     res.status(404).render("errors/404");
@@ -11,5 +13,3 @@ router.get("/400", (req, res) => {
 router.get("/500", (req, res) => {
     res.status(500).render("errors/500");
 });
-
-module.exports = router

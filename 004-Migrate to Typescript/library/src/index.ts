@@ -1,12 +1,14 @@
-const config = require("./config");
-const express = require("express");
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-const mongoose = require("mongoose");
+require("reflect-metadata");
+import config from "./config";
+import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import mongoose from "mongoose";
+import { router } from "./routes";
 
 require('express-async-errors');
 
-function setUpSocket(io) {
+function setUpSocket(io: Server) {
     io.on("connection", socket => {
         require("./modules/chat").registerSocketIO(io, socket);
     });
@@ -24,7 +26,7 @@ const start = async () => {
     setUpSocket(io);
 
     app.set("view engine", "ejs");
-    app.use("/", require("./routes"));
+    app.use("/", router);
 
     httpServer.listen(
         config.PORT,

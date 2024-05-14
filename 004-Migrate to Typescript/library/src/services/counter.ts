@@ -1,8 +1,8 @@
-const { COUNTER_URL } = require("../config");
+import config from "../config";
 
-const get = async (bookId) => {
+const get = async (bookId: string): Promise<number> => {
     try {
-        const url = `${COUNTER_URL}/api/counter/${bookId}`;
+        const url = `${config.COUNTER_URL}/api/counter/${bookId}`;
         const response = await fetch(url);
         const { count } = await response.json();
         return count;
@@ -11,9 +11,9 @@ const get = async (bookId) => {
     }
 };
 
-const incr = async (bookId) => {
+const incr = async (bookId: string): Promise<number> => {
     try {
-        const url = `${COUNTER_URL}/api/counter/${bookId}/incr`;
+        const url = `${config.COUNTER_URL}/api/counter/${bookId}/incr`;
         const response = await fetch(url, {
             method: "POST",
         });
@@ -24,7 +24,7 @@ const incr = async (bookId) => {
     }
 };
 
-module.exports = {
-    get,
-    incr,
-};
+export const CounterService = {
+    get: get,
+    incr: incr,
+}

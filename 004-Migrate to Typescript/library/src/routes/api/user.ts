@@ -1,4 +1,6 @@
-const router = require("express").Router();
+import { Router } from "express";
+
+export const router = Router();
 
 router.post('/login', (req, res) => {
     res.status(201).json({
@@ -6,5 +8,3 @@ router.post('/login', (req, res) => {
         mail: "test@mail.ru",
     });
 });
-
-module.exports = router;

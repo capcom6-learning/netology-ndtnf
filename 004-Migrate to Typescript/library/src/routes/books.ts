@@ -1,17 +1,18 @@
-const upload = require("../middleware/upload");
+import { Response, Router, ErrorRequestHandler, NextFunction } from "express";
+import upload from "../middleware/upload";
 
-const books = require("../repositories/books");
-const { Books } = require("../services");
+import { NotFoundError, ValidationError } from "../repositories/books";
+import { Books } from "../services";
 
-const router = require("express").Router();
+export const router = Router();
 
-const handleError = (res, error) => {
-    if (error instanceof books.NotFoundError) {
+const handleError = (res: Response, error: Error) => {
+    if (error instanceof NotFoundError) {
         res.redirect("/errors/404");
         return;
     }
 
-    if (error instanceof books.ValidationError) {
+    if (error instanceof ValidationError) {
         res.redirect("/errors/400");
         return;
     }
@@ -46,7 +47,7 @@ router.post("/save", upload.single("fileBook"), async (req, res) => {
             fileBook: req.file ? req.file.filename : null,
         });
     } catch (error) {
-        if (error instanceof books.ValidationError) {
+        if (error instanceof ValidationError) {
             res.render("books/update", { book: req.body });
             return;
         }
@@ -70,7 +71,7 @@ router.post("/save/:id", upload.single("fileBook"), async (req, res) => {
     try {
         await Books.update(req.params.id, data);
     } catch (error) {
-        if (error instanceof books.ValidationError) {
+        if (error instanceof ValidationError) {
             res.render("books/update", { book: req.body });
             return;
         }
@@ -92,8 +93,7 @@ router.post("/:id/delete", async (req, res) => {
     res.redirect("/");
 });
 
-router.use((err, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     handleError(res, err);
-});
-
-module.exports = router;
+};
+router.use(errorHandler);

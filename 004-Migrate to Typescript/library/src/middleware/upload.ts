@@ -1,4 +1,5 @@
-const multer = require("multer");
+import multer from "multer";
+import { Request } from "express";
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -17,7 +18,7 @@ const allowedTypes = [
     "image/vnd.djvu",
 ];
 
-const fileFilter = (req, file, cb) => {
+const fileFilter = (eq: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
     if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
     } else {
@@ -25,7 +26,7 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-module.exports = multer({
+export default multer({
     storage: storage,
     fileFilter: fileFilter,
 });
