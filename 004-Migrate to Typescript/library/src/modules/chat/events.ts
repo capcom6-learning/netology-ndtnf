@@ -1,0 +1,3 @@
+export const RES_CHAT_HISTORY = "RES_CHAT_HISTORY";
+export const REQ_SEND_MESSAGE = "REQ_SEND_MESSAGE";
+export const RES_NEW_MESSAGE = "RES_NEW_MESSAGE";

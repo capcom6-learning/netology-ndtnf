@@ -1,0 +1,92 @@
+<%- include("../partials/top.ejs", {title: book.title }); %>
+    <%- include("../partials/navbar.ejs"); %>
+        <div class="container">
+            <h1 class="my-4">Book Details</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <% if (book.fileCover) { %>
+                        <img src="<%= book.fileCover %>" class="book-cover img-thumbnail" alt="<%= book.title %>"
+                            width="150">
+                        <% } else { %>
+                            <img src="https://via.placeholder.com/150" class="book-cover img-thumbnail"
+                                alt="<%= book.title %>">
+                            <% } %>
+                </div>
+                <div class="col-md-8">
+                    <h2>
+                        <%= book.title %>
+                    </h2>
+                    <p><strong>Author:</strong>
+                        <%= book.authors %>
+                    </p>
+                    <p>
+                        <%= book.description %>
+                    </p>
+                    <p><strong>Favorite:</strong>
+                        <%= book.favorite ? 'Yes' : 'No' %>
+                    </p>
+                    <p><strong>Views</strong>
+                        <%= book.views %>
+                    </p>
+
+                    <% if (book.fileBook) { %>
+                        <p>
+                            <a href="/api/books/<%= book.id %>/download" class="btn btn-success" download>Download
+                                Book</a>
+                        </p>
+                        <% } %>
+                            <p>
+                                <a href="/" class="btn btn-primary">Back to List</a>
+                            </p>
+                </div>
+            </div>
+        </div>
+        <div class="chat-container" style="margin: 20px;">
+            <h2>Chat</h2>
+            <input type="text" id="chat-username" placeholder="Enter your name" />
+            <div id="chat-messages" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
+                <!-- Chat messages will be appended here -->
+            </div>
+            <input type="text" id="chat-input" placeholder="Type a message..." />
+            <button id="send-message">Send</button>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io({
+                query: {
+                    bookId: '<%= book.id %>'
+                }
+            });
+
+            socket.on('RES_CHAT_HISTORY', function (messages) {
+                const chatMessages = document.getElementById('chat-messages');
+                chatMessages.innerHTML = '';
+                messages.forEach(function (message) {
+                    const msgElement = document.createElement('div');
+                    msgElement.innerHTML = `<strong>${message.author}</strong> (${new Date(message.created_at).toLocaleTimeString()}): ${message.text}`;
+                    chatMessages.appendChild(msgElement);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+
+            socket.on('RES_NEW_MESSAGE', function (message) {
+                const chatMessages = document.getElementById('chat-messages');
+                const msgElement = document.createElement('div');
+                msgElement.innerHTML = `<strong>${message.author}</strong> (${new Date(message.created_at).toLocaleTimeString()}): ${message.text}`;
+                chatMessages.appendChild(msgElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+
+            document.getElementById('send-message').addEventListener('click', function () {
+                const usernameInput = document.getElementById('chat-username');
+                const messageInput = document.getElementById('chat-input');
+                const message = messageInput.value;
+                const author = usernameInput.value || 'Anonymous'; // Use 'Anonymous' if no name is entered
+                if (message && author) {
+                    socket.emit('REQ_SEND_MESSAGE', { text: message, author: author });
+                    messageInput.value = '';
+                }
+            });
+        </script>
+        <%- include("../partials/bottom.ejs"); %>

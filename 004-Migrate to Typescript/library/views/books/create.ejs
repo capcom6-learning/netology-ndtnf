@@ -1,0 +1,12 @@
+<%- include("../partials/top.ejs", {title: "New book" }); %>
+    <%- include("../partials/navbar.ejs"); %>
+
+        <div class="container mt-4">
+            <h1>New Book</h1>
+            <form action="/save" method="post" enctype="multipart/form-data">
+                <%- include("partials/form.ejs", {book: book}); %>
+                    <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+
+        <%- include("../partials/bottom.ejs"); %>
