@@ -16,6 +16,7 @@ import { BooksService } from './books.service';
 import { BookDto, CreateBookDto, ReplaceBookDto, UpdateBookDto } from './book.dto';
 import { Response } from 'express';
 import mongoose from 'mongoose';
+import { ParseObjectIdPipe } from 'src/pipes/parse-objectid.pipe';
 
 @Controller('books')
 export class BooksController {
@@ -27,7 +28,7 @@ export class BooksController {
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string) {
+  async findById(@Param('id', ParseObjectIdPipe) id: string) {
     const book = await this.booksService.findById(id);
     if (!book) {
       throw new NotFoundException('Book not found');
@@ -51,7 +52,7 @@ export class BooksController {
   }
 
   @Put(':id')
-  async replace(@Param('id') id: string, @Body() book: ReplaceBookDto) {
+  async replace(@Param('id', ParseObjectIdPipe) id: string, @Body() book: ReplaceBookDto) {
     try {
       const newBook = await this.booksService.replace(id, book);
       if (!newBook) {
@@ -69,7 +70,7 @@ export class BooksController {
 
   @Delete(':id')
   @HttpCode(204)
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id', ParseObjectIdPipe) id: string) {
     await this.booksService.delete(id);
   }
 }

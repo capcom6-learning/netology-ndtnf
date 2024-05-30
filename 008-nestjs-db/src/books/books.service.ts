@@ -15,10 +15,6 @@ export class BooksService {
   }
 
   async findById(id: string): Promise<BookDto> {
-    if (!isValidObjectId(id)) {
-      return null;
-    }
-
     const book = await this.bookModel.findById(id).exec();
     if (!book) {
       return null;
@@ -34,10 +30,6 @@ export class BooksService {
   }
 
   async replace(id: string, book: ReplaceBookDto): Promise<BookDto> {
-    if (!isValidObjectId(id)) {
-      return null;
-    }
-
     await this.bookModel.validate(book);
 
     return new BookDto(
@@ -50,10 +42,6 @@ export class BooksService {
   }
 
   async delete(id: string): Promise<BookDto> {
-    if (!isValidObjectId(id)) {
-      return null;
-    }
-
     return new BookDto(await this.bookModel.findByIdAndDelete(id));
   }
 }

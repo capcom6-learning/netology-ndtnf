@@ -10,6 +10,9 @@ GET {{baseUrl}}/books HTTP/1.1
 GET {{baseUrl}}/books/66026f888f7e0865cd57ec1f HTTP/1.1
 
 ###
+GET {{baseUrl}}/books/bad-id HTTP/1.1
+
+###
 POST {{baseUrl}}/books HTTP/1.1
 Content-Type: application/json
 
