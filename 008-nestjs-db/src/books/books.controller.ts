@@ -9,12 +9,12 @@ import {
   Res,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
-import { Book } from './book.dto';
+import { BookDto } from './book.dto';
 import { Response } from 'express';
 
 @Controller('books')
 export class BooksController {
-  constructor(private readonly booksService: BooksService) {}
+  constructor(private readonly booksService: BooksService) { }
 
   @Get()
   select() {
@@ -33,12 +33,12 @@ export class BooksController {
   }
 
   @Post()
-  insert(@Body() book: Book) {
+  insert(@Body() book: BookDto) {
     return this.booksService.insert(book);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() book: Book) {
+  update(@Param('id') id: string, @Body() book: BookDto) {
     return this.booksService.update(id, book);
   }
 
