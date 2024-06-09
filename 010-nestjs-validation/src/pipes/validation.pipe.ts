@@ -9,7 +9,10 @@ export class ValidationPipe implements PipeTransform {
     transform(value: any, metadata: ArgumentMetadata) {
         const { error } = this.schema.validate(value);
         if (error) {
-            throw new BadRequestException(error.message);
+            throw new BadRequestException(
+                error.message,
+                { cause: error }
+            );
         }
         return value;
     }

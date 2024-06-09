@@ -1,5 +1,5 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {
@@ -16,12 +16,12 @@ export class ResponseInterceptor implements NestInterceptor {
                         data,
                     }
                 }),
-                catchError((err) => {
-                    return of({
-                        status: "fail",
-                        data: err.response || err,
-                    })
-                })
+                // catchError((err) => {
+                //     return of({
+                //         status: "fail",
+                //         data: err.response || err,
+                //     })
+                // })
             );
     }
 
