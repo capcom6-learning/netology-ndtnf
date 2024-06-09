@@ -7,16 +7,16 @@ import {
   HttpCode,
   NotFoundException,
   Param,
-  Patch,
   Post,
   Put,
-  Res,
+  UsePipes,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
-import { BookDto, CreateBookDto, ReplaceBookDto, UpdateBookDto } from './book.dto';
-import { Response } from 'express';
+import { CreateBookDto, ReplaceBookDto } from './book.dto';
 import mongoose from 'mongoose';
 import { ParseObjectIdPipe } from 'src/pipes/parse-objectid.pipe';
+import { ValidationPipe } from 'src/pipes/validation.pipe';
+import { createBookSchema } from './schemas/book.schema';
 
 @Controller('books')
 export class BooksController {
@@ -52,6 +52,7 @@ export class BooksController {
   }
 
   @Put(':id')
+  @UsePipes(new ValidationPipe(createBookSchema))
   async replace(@Param('id', ParseObjectIdPipe) id: string, @Body() book: ReplaceBookDto) {
     try {
       const newBook = await this.booksService.replace(id, book);

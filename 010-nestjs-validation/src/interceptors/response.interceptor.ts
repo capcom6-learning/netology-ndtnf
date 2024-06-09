@@ -19,7 +19,7 @@ export class ResponseInterceptor implements NestInterceptor {
                 catchError((err) => {
                     return of({
                         status: "fail",
-                        data: err
+                        data: err.response || err,
                     })
                 })
             );

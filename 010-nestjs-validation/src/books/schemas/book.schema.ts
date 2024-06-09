@@ -1,30 +1,11 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import * as Joi from "joi";
 
-@Schema({ timestamps: true })
-export class Book {
-    @Prop({ required: true })
-    title: string;
-
-    @Prop({ required: true })
-    description: string;
-
-    @Prop({ required: true })
-    authors: string;
-
-    @Prop({ default: false })
-    favorite: boolean;
-
-    @Prop()
-    fileCover?: string;
-
-    @Prop()
-    fileName?: string;
-
-    @Prop()
-    fileBook?: string;
-}
-
-export type BookDocument = HydratedDocument<Book>;
-
-export const BookSchema = SchemaFactory.createForClass(Book);
+export const createBookSchema = Joi.object({
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    authors: Joi.string().required(),
+    favorite: Joi.boolean(),
+    fileCover: Joi.string(),
+    fileName: Joi.string(),
+    fileBook: Joi.string(),
+});
