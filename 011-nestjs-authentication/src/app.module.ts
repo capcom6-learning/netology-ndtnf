@@ -9,7 +9,7 @@ import { RouterModule } from '@nestjs/core';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGO_URL || 'mongodb://localhost:27017/library'),
     BooksModule,
     AuthModule,
