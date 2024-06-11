@@ -5,6 +5,7 @@ GET {{baseUrl}} HTTP/1.1
 
 ###
 GET {{baseUrl}}/books HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NjgzZTJkYzU0MzRhZjkyYzAzMTRkNCIsImlhdCI6MTcxODEwNzk0NiwiZXhwIjoxNzE4MjgwNzQ2fQ.d0j-AzjxUp7CjTrdKvPPYSHpNsndVq7QVBI1hD-LOmw
 
 ###
 GET {{baseUrl}}/books/66026f888f7e0865cd57ec1f HTTP/1.1

@@ -9,6 +9,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
@@ -17,8 +18,10 @@ import mongoose from 'mongoose';
 import { ParseObjectIdPipe } from 'src/pipes/parse-objectid.pipe';
 import { ValidationPipe } from 'src/pipes/validation.pipe';
 import { createBookSchema } from './schemas/book.schema';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
 @Controller('books')
+@UseGuards(JwtGuard)
 export class BooksController {
   constructor(private readonly booksService: BooksService) { }
 
