@@ -15,10 +15,10 @@ import {
 import { BooksService } from './books.service';
 import { CreateBookDto, ReplaceBookDto } from './book.dto';
 import mongoose from 'mongoose';
-import { ParseObjectIdPipe } from 'src/pipes/parse-objectid.pipe';
-import { ValidationPipe } from 'src/pipes/validation.pipe';
+import { ParseObjectIdPipe } from '../pipes/parse-objectid.pipe';
+import { ValidationPipe } from '../pipes/validation.pipe';
 import { createBookSchema } from './schemas/book.schema';
-import { JwtGuard } from 'src/auth/jwt.guard';
+import { JwtGuard } from '../auth/jwt.guard';
 
 @Controller('books')
 @UseGuards(JwtGuard)

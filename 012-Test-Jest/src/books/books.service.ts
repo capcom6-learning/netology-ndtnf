@@ -24,9 +24,9 @@ export class BooksService {
   }
 
   async insert(book: CreateBookDto): Promise<BookDto> {
-    const newBook = new this.bookModel(book);
+    await this.bookModel.validate(book);
 
-    return new BookDto(await newBook.save());
+    return new BookDto(await this.bookModel.create(book));
   }
 
   async replace(id: string, book: ReplaceBookDto): Promise<BookDto> {
