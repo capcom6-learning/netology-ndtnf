@@ -42,6 +42,7 @@ export class BooksController {
 
   @Post()
   @HttpCode(201)
+  @UsePipes(new ValidationPipe(createBookSchema))
   async insert(@Body() book: CreateBookDto) {
     try {
       return await this.booksService.insert(book);
@@ -55,7 +56,6 @@ export class BooksController {
   }
 
   @Put(':id')
-  @UsePipes(new ValidationPipe(createBookSchema))
   async replace(@Param('id', ParseObjectIdPipe) id: string, @Body() book: ReplaceBookDto) {
     try {
       const newBook = await this.booksService.replace(id, book);
