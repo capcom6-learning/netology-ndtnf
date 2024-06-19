@@ -8,10 +8,6 @@ export class BookComment {
 
     @Prop({ required: true })
     text: string;
-
-    get comment() {
-        return this.text;
-    }
 }
 
 export type BookCommentDocument = HydratedDocument<BookComment>;
