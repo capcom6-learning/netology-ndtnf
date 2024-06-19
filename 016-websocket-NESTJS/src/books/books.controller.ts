@@ -13,7 +13,7 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
-import { CreateBookDto, ReplaceBookDto } from './book.dto';
+import { CreateBookDto, ReplaceBookDto } from './dto/book.dto';
 import mongoose from 'mongoose';
 import { ParseObjectIdPipe } from '../pipes/parse-objectid.pipe';
 import { ValidationPipe } from '../pipes/validation.pipe';

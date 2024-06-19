@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BookDto, CreateBookDto, ReplaceBookDto, UpdateBookDto } from './book.dto';
+import { BookDto, CreateBookDto, ReplaceBookDto, UpdateBookDto } from './dto/book.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Book } from './models/book.model';
