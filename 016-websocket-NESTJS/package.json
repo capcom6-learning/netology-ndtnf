@@ -27,6 +27,7 @@
     "@nestjs/mongoose": "^10.0.6",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/websockets": "^10.3.9",
     "argon2": "^0.40.3",
     "joi": "^17.13.1",
     "mongoose": "^8.4.0",
