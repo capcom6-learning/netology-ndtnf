@@ -1,9 +1,27 @@
-const characters = require('./characters.json');
+const { MongoClient } = require('mongodb');
+
+const DB_NAME = 'marvel';
+
+const url = process.env.MONGO_URL;
+
+const client = new MongoClient(url);
 
 module.exports.handler = async (event, context) => {
-    const id = event.queryStringParameters.id;
+    await client.connect();
+    const db = client.db(DB_NAME);
+    const collection = db.collection('characters');
 
+    if (await collection.countDocuments() === 0) {
+        const characters = require('./characters.json');
+
+        await collection.createIndex({ id: 1 }, { unique: true });
+        await collection.insertMany(characters);
+    }
+
+
+    const id = event.queryStringParameters.id;
     if (!id) {
+        const characters = await collection.find({}).toArray();
         return {
             statusCode: 200,
             headers: {
@@ -13,7 +31,7 @@ module.exports.handler = async (event, context) => {
         };
     }
 
-    const character = characters.find(c => c.id == id);
+    const character = await collection.findOne({ id: parseInt(id) });
     if (!character) {
         return {
             statusCode: 404,
