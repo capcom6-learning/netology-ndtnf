@@ -2,7 +2,7 @@ import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/co
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './auth.models';
-import { JwtPayload, UserDto } from './auth.dto';
+import { JwtPayload, NewUserDto, UserDto } from './auth.dto';
 import * as argon2 from "argon2";
 import { JwtService } from '@nestjs/jwt';
 
@@ -13,16 +13,27 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) { }
 
-    async signup(user: UserDto, password: string): Promise<UserDto> {
+    async findOrCreate(user: NewUserDto, password?: string): Promise<UserDto> {
+        const existing = await this.userModel.findOne({ email: user.email });
+        if (existing) {
+            return new UserDto({ ...existing.toObject({ getters: true }), accessToken: await this.makeJwt(existing) });
+        }
+
+        return this.signup(user, password);
+    }
+
+    async signup(user: NewUserDto, password?: string): Promise<UserDto> {
         const existing = await this.userModel.findOne({ email: user.email });
         if (existing) {
             throw new ConflictException('Email already registered');
         }
 
-        const created = new this.userModel({ ...user, passwordHash: await argon2.hash(password) });
+        const passwordHash = password ? await argon2.hash(password) : 'invalid-hash';
+
+        const created = new this.userModel({ ...user, passwordHash: passwordHash });
         await created.save();
 
-        return new UserDto({ ...created.toObject(), accessToken: await this.makeJwt(created) });
+        return new UserDto({ ...created.toObject({ getters: true }), accessToken: await this.makeJwt(created) });
     }
 
     async signin(email: string, password: string): Promise<UserDto> {
@@ -35,7 +46,7 @@ export class AuthService {
             throw new UnauthorizedException('Invalid email or password');
         }
 
-        return new UserDto({ ...existing.toObject(), accessToken: await this.makeJwt(existing) });
+        return new UserDto({ ...existing.toObject({ getters: true }), accessToken: await this.makeJwt(existing) });
     }
 
     protected async makeJwt(user: UserDocument): Promise<string> {

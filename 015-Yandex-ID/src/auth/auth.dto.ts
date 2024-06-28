@@ -16,6 +16,8 @@ export class UserDto {
     }
 }
 
+export type NewUserDto = Omit<UserDto, 'id' | 'accessToken'>
+
 export class JwtPayload {
     id: string
     email: string;
