@@ -54,3 +54,6 @@ Content-Type: application/json
     "email": "test{{$randomInt 0 10}}@example.com",
     "password": "123456"
 }
+
+###
+GET {{baseUrl}}/api/users/yandex HTTP/1.1

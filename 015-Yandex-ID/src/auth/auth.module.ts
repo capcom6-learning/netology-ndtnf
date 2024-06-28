@@ -6,6 +6,7 @@ import { User, UserModel } from './auth.models';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
+import { YandexStrategy } from './yandex.strategy';
 
 @Module({
   imports: [
@@ -18,9 +19,9 @@ import { JwtStrategy } from './jwt.strategy';
           expiresIn: '2 days',
         }
       }),
-    })
+    }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, YandexStrategy],
 })
 export class AuthModule { }

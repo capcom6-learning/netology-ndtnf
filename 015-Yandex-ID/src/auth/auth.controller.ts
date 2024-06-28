@@ -1,7 +1,8 @@
-import { Body, Controller, HttpCode, Post, UsePipes } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Request, UseGuards, UsePipes } from '@nestjs/common';
 import { SigninRequestDto, SigninRequestSchema, SignupRequestDto, SignupRequestSchema, UserDto } from './auth.dto';
 import { ValidationPipe } from '../pipes/validation.pipe';
 import { AuthService } from './auth.service';
+import { YandexGuard } from './yandex.guard';
 
 @Controller('users')
 export class AuthController {
@@ -26,5 +27,11 @@ export class AuthController {
             request.email,
             request.password
         );
+    }
+
+    @Get('yandex')
+    @UseGuards(YandexGuard)
+    async yandex(@Request() req) {
+        return req.user;
     }
 }
