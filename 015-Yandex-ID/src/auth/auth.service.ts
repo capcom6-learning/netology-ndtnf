@@ -1,8 +1,8 @@
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Require_id } from 'mongoose';
+import { Model } from 'mongoose';
 import { User, UserDocument } from './auth.models';
-import { JwtPayload, SignupRequestDto, UserDto } from './auth.dto';
+import { JwtPayload, UserDto } from './auth.dto';
 import * as argon2 from "argon2";
 import { JwtService } from '@nestjs/jwt';
 
